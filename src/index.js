@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.port || 3000;
 
 app.use(express.json());
-app.use(productRouter);
+app.use('/products',productRouter);
 
 app.listen(port, () => {
     console.log("server is up and running on port "+ port);

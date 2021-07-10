@@ -34,6 +34,20 @@ const fetchProduct = async (req, res) => {
     }
 };
 
+const searchProduct = async (req, res) => {
+    console.log(req.query);
+    try {
+        const result = await Product.find(req.query);
+        if(!result.length) {
+            return res.status(404).send();
+        }
+        res.status(200).send(result);
+    } catch(error) {
+        res.status(500).send(error)
+    }
+};
+
+
 const updateProduct = async (req, res) => {
     try {
         const product = await Product.findByIdAndUpdate(
@@ -69,5 +83,6 @@ module.exports = {
     fetchProducts,
     fetchProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    searchProduct
 };

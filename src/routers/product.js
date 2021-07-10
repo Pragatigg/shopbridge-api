@@ -5,7 +5,8 @@ const {
     fetchProducts, 
     fetchProduct, 
     updateProduct, 
-    deleteProduct 
+    deleteProduct,
+    searchProduct
 } = require("../controllers/product");
 
 const router = express.Router();
@@ -13,6 +14,8 @@ const router = express.Router();
 router.post("/", createProduct);
 
 router.get("/", fetchProducts);
+
+router.get("/search", searchProduct);
 
 router.get("/:id", fetchProduct);
 

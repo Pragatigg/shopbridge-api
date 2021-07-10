@@ -6,6 +6,12 @@ const User = mongoose.model('User', {
         required: true,
         trim: true
     },
+    password: {
+        type: String,
+        required: true,
+        minlength: 6,
+        maxlength: 10
+    },
     email: {
         type: String,
         required: true,
@@ -13,7 +19,6 @@ const User = mongoose.model('User', {
         validate: {
             validator: function (email) {
                 var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-                console.log(email);
                 return emailRegex.test(email);
             },
             message: "Invalid Email"

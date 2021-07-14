@@ -48,19 +48,24 @@ const searchUser = async (req, res) => {
 
 
 const updateUser = async (req, res) => {
+    const updates = ['name', 'password', 'email'];
     try {
-        const user = await User.findByIdAndUpdate(
-            req.params.id, 
-            req.body,
-            {
-                new: true,
-                runValidators: true
-            });
+        // const user = await User.findByIdAndUpdate(
+        //     req.params.id, 
+        //     req.body,
+        //     {
+        //         new: true,
+        //         runValidators: true
+        //     });
+        const user = await User.findById(req.params.id);
         if(!user) {
             return res.status(404).send();
         }
+        updates.forEach(key => user[key] = req.body[key]? req.body[key]: user[key]);
+        await user.save();
         res.send(user);
     } catch(error) {
+        console.log(error);
         res.status(500).send(error);
     }
 };

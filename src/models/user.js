@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
+        unique: true,
         validate: {
             validator: function (email) {
                 var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
@@ -27,6 +28,22 @@ const userSchema = new mongoose.Schema({
     }
 });
 
+userSchema.statics.findByCredentials = async (email, password) => {
+    const user = await User.findOne({ email });
+    if(!user) {
+        throw new Error("Unable to login");
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if(!isMatch) {
+        throw new Error("Unable to login"); 
+    }
+
+    return user;
+};
+
+//Middleware to check if user has modified password
 userSchema.pre('save', async function(next) {
     const user = this;
     

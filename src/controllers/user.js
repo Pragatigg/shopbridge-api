@@ -82,11 +82,21 @@ const deleteUser = async (req, res) => {
     }
 };
 
+const loginUser = async (req, res) => {
+    try {
+        const user = await User.findByCredentials(req.body.email, req.body.password);
+        res.send(user);
+    } catch(e) {
+        res.status(400).send(e);
+    }
+};
+
 module.exports = {
     createUser,
     fetchUsers,
     fetchUser,
     updateUser,
     deleteUser,
-    searchUser
+    searchUser,
+    loginUser
 };

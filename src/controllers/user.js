@@ -11,7 +11,7 @@ const createUser = async (req, res) => {
 };
 
 const fetchUsers = async (req, res) => {
-    try { 
+    try {
         const result = await User.find();
         res.status(200).send({
             data: result,
@@ -51,7 +51,7 @@ const updateUser = async (req, res) => {
     const updates = ['name', 'password', 'email'];
     try {
         // const user = await User.findByIdAndUpdate(
-        //     req.params.id, 
+        //     req.params.id,
         //     req.body,
         //     {
         //         new: true,
@@ -85,7 +85,8 @@ const deleteUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password);
-        res.send(user);
+        const token = await user.generateAuthToken();
+        res.send({ user, token });
     } catch(e) {
         res.status(400).send(e);
     }

@@ -1,14 +1,15 @@
 const express = require("express");
 
-const { 
-    createUser, 
-    fetchUsers, 
-    fetchUser, 
-    updateUser, 
+const {
+    createUser,
+    fetchUsers,
+    fetchUser,
+    updateUser,
     deleteUser,
     searchUser,
     loginUser
 } = require("../controllers/user");
+const auth = require("../middlewares/auth");
 
 const router = express.Router();
 
@@ -18,11 +19,11 @@ router.get("/", fetchUsers);
 
 router.get("/search", searchUser);
 
-router.get("/:id", fetchUser);
+router.get("/:id", auth, fetchUser);
 
-router.patch("/:id", updateUser);
+router.patch("/:id", auth, updateUser);
 
-router.delete("/:id", deleteUser);
+router.delete("/:id", auth, deleteUser);
 
 router.post("/login", loginUser);
 

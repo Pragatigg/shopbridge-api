@@ -22,6 +22,10 @@ const fetchUsers = async (req, res) => {
     }
 };
 
+const fetchUserProfile = async (req, res) => {
+  res.send(req.user);
+};
+
 const fetchUser = async (req, res) => {
     try {
         const result = await User.findById(req.params.id);
@@ -96,6 +100,7 @@ module.exports = {
     createUser,
     fetchUsers,
     fetchUser,
+    fetchUserProfile,
     updateUser,
     deleteUser,
     searchUser,

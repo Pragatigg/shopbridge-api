@@ -7,7 +7,8 @@ const {
     updateUser,
     deleteUser,
     searchUser,
-    loginUser
+    loginUser,
+    fetchUserProfile
 } = require("../controllers/user");
 const auth = require("../middlewares/auth");
 
@@ -18,6 +19,8 @@ router.post("/", createUser);
 router.get("/", fetchUsers);
 
 router.get("/search", searchUser);
+
+router.get("/me", auth, fetchUserProfile);
 
 router.get("/:id", auth, fetchUser);
 

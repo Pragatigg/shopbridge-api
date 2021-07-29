@@ -8,6 +8,7 @@ const {
     deleteUser,
     searchUser,
     loginUser,
+    logoutUser,
     fetchUserProfile
 } = require("../controllers/user");
 const auth = require("../middlewares/auth");
@@ -29,5 +30,7 @@ router.patch("/:id", auth, updateUser);
 router.delete("/:id", auth, deleteUser);
 
 router.post("/login", loginUser);
+
+router.post("/logout", auth, logoutUser);
 
 module.exports = router;

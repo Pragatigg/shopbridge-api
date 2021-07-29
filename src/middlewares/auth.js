@@ -13,6 +13,7 @@ const auth = async (req, res, next) => {
 
     //Save the user in req so will not need to fetch user again
     req.user = user;
+    req.token = token;
 
     //things went well, redirect to next middleware
     next();

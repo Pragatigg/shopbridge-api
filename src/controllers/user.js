@@ -96,6 +96,16 @@ const loginUser = async (req, res) => {
     }
 };
 
+const logoutUser = async (req, res) => {
+  try {
+    req.user.tokens = req.user.tokens.filter(obj => obj.token !== req.token);
+    await req.user.save();
+    res.send();
+  } catch(e) {
+    res.status(500).send(e);
+  }
+};
+
 module.exports = {
     createUser,
     fetchUsers,
@@ -104,5 +114,6 @@ module.exports = {
     updateUser,
     deleteUser,
     searchUser,
-    loginUser
+    loginUser,
+    logoutUser
 };

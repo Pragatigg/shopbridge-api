@@ -1,7 +1,10 @@
 const Product = require("../models/product");
 
 const createProduct = async (req, res) => {
-    const product = new Product(req.body);
+    const product = new Product({
+      ...req.body,
+      owner: req.user._id
+    });
     try {
         await product.save();
         res.status(201).send(product);
@@ -11,7 +14,7 @@ const createProduct = async (req, res) => {
 };
 
 const fetchProducts = async (req, res) => {
-    try { 
+    try {
         const result = await Product.find();
         res.status(200).send({
             data: result,
@@ -50,7 +53,7 @@ const searchProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
     try {
         const product = await Product.findByIdAndUpdate(
-            req.params.id, 
+            req.params.id,
             req.body,
             {
                 new: true,

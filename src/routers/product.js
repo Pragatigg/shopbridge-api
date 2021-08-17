@@ -1,17 +1,18 @@
 const express = require("express");
 
-const { 
-    createProduct, 
-    fetchProducts, 
-    fetchProduct, 
-    updateProduct, 
+const {
+    createProduct,
+    fetchProducts,
+    fetchProduct,
+    updateProduct,
     deleteProduct,
     searchProduct
 } = require("../controllers/product");
+const auth = require("../middlewares/auth");
 
 const router = express.Router();
 
-router.post("/", createProduct);
+router.post("/", auth, createProduct);
 
 router.get("/", fetchProducts);
 

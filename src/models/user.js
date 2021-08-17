@@ -33,6 +33,12 @@ const userSchema = new mongoose.Schema({
     }]
 });
 
+userSchema.virtual('products', {
+    ref: "Product",
+    localField: "_id",
+    foreignField: "owner",
+});
+
 //Instance methods
 userSchema.methods.toJSON = function() {
     const user = this;
@@ -41,7 +47,7 @@ userSchema.methods.toJSON = function() {
     delete userObj.password;
     delete userObj.tokens;
 
-    return userObj; 
+    return userObj;
 };
 
 userSchema.methods.generateAuthToken = async function () {
